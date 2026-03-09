@@ -5,6 +5,7 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   test: {
     dir: './spec/unit',
+    exclude: ['**/deprecated/**', '**/node_modules/**'],
     globals: true,
     setupFiles: ['luxon-jest-matchers', './spec/unit/setup/hooks.js'],
     fileParallelism: true,

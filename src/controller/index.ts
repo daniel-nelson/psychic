@@ -15,37 +15,39 @@ import Koa from 'koa'
 import { debuglog } from 'node:util'
 import { ControllerHook } from '../controller/hooks.js'
 import ParamValidationError from '../error/controller/ParamValidationError.js'
-import HttpStatusBadGateway from '../error/http/BadGateway.js'
-import HttpStatusBadRequest from '../error/http/BadRequest.js'
-import HttpStatusConflict from '../error/http/Conflict.js'
-import HttpStatusContentTooLarge from '../error/http/ContentTooLarge.js'
-import HttpStatusExpectationFailed from '../error/http/ExpectationFailed.js'
-import HttpStatusFailedDependency from '../error/http/FailedDependency.js'
-import HttpStatusForbidden from '../error/http/Forbidden.js'
-import HttpStatusGatewayTimeout from '../error/http/GatewayTimeout.js'
-import HttpStatusGone from '../error/http/Gone.js'
-import HttpStatusImATeapot from '../error/http/ImATeapot.js'
-import HttpStatusInsufficientStorage from '../error/http/InsufficientStorage.js'
-import HttpStatusInternalServerError from '../error/http/InternalServerError.js'
-import HttpStatusLocked from '../error/http/Locked.js'
-import HttpStatusMethodNotAllowed from '../error/http/MethodNotAllowed.js'
-import HttpStatusMisdirectedRequest from '../error/http/MisdirectedRequest.js'
-import HttpStatusNotAcceptable from '../error/http/NotAcceptable.js'
-import HttpStatusNotExtended from '../error/http/NotExtended.js'
-import HttpStatusNotFound from '../error/http/NotFound.js'
-import HttpStatusNotImplemented from '../error/http/NotImplemented.js'
-import HttpStatusPaymentRequired from '../error/http/PaymentRequired.js'
-import HttpStatusPreconditionFailed from '../error/http/PreconditionFailed.js'
-import HttpStatusPreconditionRequired from '../error/http/PreconditionRequired.js'
-import HttpStatusProxyAuthenticationRequired from '../error/http/ProxyAuthenticationRequired.js'
-import HttpStatusRequestHeaderFieldsTooLarge from '../error/http/RequestHeaderFieldsTooLarge.js'
-import HttpStatusServiceUnavailable from '../error/http/ServiceUnavailable.js'
+import {
+  HttpStatusBadGateway,
+  HttpStatusBadRequest,
+  HttpStatusConflict,
+  HttpStatusContentTooLarge,
+  HttpStatusExpectationFailed,
+  HttpStatusFailedDependency,
+  HttpStatusForbidden,
+  HttpStatusGatewayTimeout,
+  HttpStatusGone,
+  HttpStatusImATeapot,
+  HttpStatusInsufficientStorage,
+  HttpStatusInternalServerError,
+  HttpStatusLocked,
+  HttpStatusMethodNotAllowed,
+  HttpStatusMisdirectedRequest,
+  HttpStatusNotAcceptable,
+  HttpStatusNotExtended,
+  HttpStatusNotFound,
+  HttpStatusNotImplemented,
+  HttpStatusPaymentRequired,
+  HttpStatusPreconditionFailed,
+  HttpStatusPreconditionRequired,
+  HttpStatusProxyAuthenticationRequired,
+  HttpStatusRequestHeaderFieldsTooLarge,
+  HttpStatusServiceUnavailable,
+  HttpStatusTooManyRequests,
+  HttpStatusUnauthorized,
+  HttpStatusUnavailableForLegalReasons,
+  HttpStatusUnprocessableContent,
+  HttpStatusUnsupportedMediaType,
+} from '../error/http/errors.js'
 import HttpStatusCodeMap, { HttpStatusCodeInt, HttpStatusSymbol } from '../error/http/status-codes.js'
-import HttpStatusTooManyRequests from '../error/http/TooManyRequests.js'
-import HttpStatusUnauthorized from '../error/http/Unauthorized.js'
-import HttpStatusUnavailableForLegalReasons from '../error/http/UnavailableForLegalReasons.js'
-import HttpStatusUnprocessableContent from '../error/http/UnprocessableContent.js'
-import HttpStatusUnsupportedMediaType from '../error/http/UnsupportedMediaType.js'
 import EnvInternal from '../helpers/EnvInternal.js'
 import toJson from '../helpers/toJson.js'
 import OpenapiEndpointRenderer from '../openapi-renderer/endpoint.js'
@@ -1130,11 +1132,8 @@ export default class PsychicController {
    * }
    * ```
    */
-  // 400
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public badRequest(data: any = undefined) {
-    throw new HttpStatusBadRequest(data)
-  }
+  public badRequest(data?: any): never { throw new HttpStatusBadRequest(data) }
 
   /**
    * Throws an HTTP 401 Unauthorized error. Use this when authentication
@@ -1154,17 +1153,8 @@ export default class PsychicController {
    * }
    * ```
    */
-  // 401
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public unauthorized(message: any = undefined) {
-    throw new HttpStatusUnauthorized(message)
-  }
-
-  // 402
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public paymentRequired(message: any = undefined) {
-    throw new HttpStatusPaymentRequired(message)
-  }
+  public unauthorized(message?: any): never { throw new HttpStatusUnauthorized(message) }
 
   /**
    * Throws an HTTP 403 Forbidden error. Use this when the client is authenticated
@@ -1185,11 +1175,8 @@ export default class PsychicController {
    * }
    * ```
    */
-  // 403
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public forbidden(message: any = undefined) {
-    throw new HttpStatusForbidden(message)
-  }
+  public forbidden(message?: any): never { throw new HttpStatusForbidden(message) }
 
   /**
    * Throws an HTTP 404 Not Found error. Use this when the requested resource
@@ -1210,161 +1197,81 @@ export default class PsychicController {
    * }
    * ```
    */
-  // 404
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public notFound(message: any = undefined) {
-    throw new HttpStatusNotFound(message)
-  }
+  public notFound(message?: any): never { throw new HttpStatusNotFound(message) }
 
-  // 405
+  /**
+   * Throws an HTTP 422 Unprocessable Content error. Use this when the request
+   * is well-formed but contains semantic errors (e.g., validation failures).
+   *
+   * @param data - Optional error data to include in the response (typically validation errors)
+   * @throws {HttpStatusUnprocessableContent} Always throws this error
+   *
+   * @example
+   * ```ts
+   * class UsersController extends ApplicationController {
+   *   public create() {
+   *     this.unprocessableContent({ errors: { email: ['is invalid'] } })
+   *   }
+   * }
+   * ```
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public methodNotAllowed(message: any = undefined) {
-    throw new HttpStatusMethodNotAllowed(message)
-  }
+  public unprocessableContent(data?: any): never { throw new HttpStatusUnprocessableContent(data) }
 
-  // 406
+  // 4xx client errors
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public notAcceptable(message: any = undefined) {
-    throw new HttpStatusNotAcceptable(message)
-  }
+  public paymentRequired(message?: any): never { throw new HttpStatusPaymentRequired(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public methodNotAllowed(message?: any): never { throw new HttpStatusMethodNotAllowed(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public notAcceptable(message?: any): never { throw new HttpStatusNotAcceptable(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public proxyAuthenticationRequired(message?: any): never { throw new HttpStatusProxyAuthenticationRequired(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public conflict(message?: any): never { throw new HttpStatusConflict(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public gone(message?: any): never { throw new HttpStatusGone(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public preconditionFailed(message?: any): never { throw new HttpStatusPreconditionFailed(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public contentTooLarge(message?: any): never { throw new HttpStatusContentTooLarge(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public unsupportedMediaType(message?: any): never { throw new HttpStatusUnsupportedMediaType(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public expectationFailed(message?: any): never { throw new HttpStatusExpectationFailed(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public imATeampot(message?: any): never { throw new HttpStatusImATeapot(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public misdirectedRequest(message?: any): never { throw new HttpStatusMisdirectedRequest(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public locked(message?: any): never { throw new HttpStatusLocked(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public failedDependency(message?: any): never { throw new HttpStatusFailedDependency(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public preconditionRequired(message?: any): never { throw new HttpStatusPreconditionRequired(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public tooManyRequests(message?: any): never { throw new HttpStatusTooManyRequests(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public requestHeaderFieldsTooLarge(message?: any): never { throw new HttpStatusRequestHeaderFieldsTooLarge(message) }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public unavailableForLegalReasons(message?: any): never { throw new HttpStatusUnavailableForLegalReasons(message) }
 
-  // 407
+  // 5xx server errors
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public proxyAuthenticationRequired(message: any = undefined) {
-    throw new HttpStatusProxyAuthenticationRequired(message)
-  }
-
-  // 409
+  public internalServerError(data?: any): never { throw new HttpStatusInternalServerError(data) }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public conflict(message: any = undefined) {
-    throw new HttpStatusConflict(message)
-  }
-
-  // 410
+  public notImplemented(message?: any): never { throw new HttpStatusNotImplemented(message) }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public gone(message: any = undefined) {
-    throw new HttpStatusGone(message)
-  }
-
-  // 412
+  public badGateway(message?: any): never { throw new HttpStatusBadGateway(message) }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public preconditionFailed(message: any = undefined) {
-    throw new HttpStatusPreconditionFailed(message)
-  }
-
-  // 413
+  public serviceUnavailable(message?: any): never { throw new HttpStatusServiceUnavailable(message) }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public contentTooLarge(message: any = undefined) {
-    throw new HttpStatusContentTooLarge(message)
-  }
-
-  // 415
+  public gatewayTimeout(message?: any): never { throw new HttpStatusGatewayTimeout(message) }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public unsupportedMediaType(message: any = undefined) {
-    throw new HttpStatusUnsupportedMediaType(message)
-  }
-
-  // 417
+  public insufficientStorage(message?: any): never { throw new HttpStatusInsufficientStorage(message) }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public expectationFailed(message: any = undefined) {
-    throw new HttpStatusExpectationFailed(message)
-  }
-
-  // 418
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public imATeampot(message: any = undefined) {
-    throw new HttpStatusImATeapot(message)
-  }
-
-  // 421
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public misdirectedRequest(message: any = undefined) {
-    throw new HttpStatusMisdirectedRequest(message)
-  }
-
-  // 422
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public unprocessableContent(data: any = undefined) {
-    throw new HttpStatusUnprocessableContent(data)
-  }
-
-  // 423
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public locked(message: any = undefined) {
-    throw new HttpStatusLocked(message)
-  }
-
-  // 424
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public failedDependency(message: any = undefined) {
-    throw new HttpStatusFailedDependency(message)
-  }
-
-  // 428
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public preconditionRequired(message: any = undefined) {
-    throw new HttpStatusPreconditionRequired(message)
-  }
-
-  // 429
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public tooManyRequests(message: any = undefined) {
-    throw new HttpStatusTooManyRequests(message)
-  }
-
-  // 431
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public requestHeaderFieldsTooLarge(message: any = undefined) {
-    throw new HttpStatusRequestHeaderFieldsTooLarge(message)
-  }
-
-  // 451
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public unavailableForLegalReasons(message: any = undefined) {
-    throw new HttpStatusUnavailableForLegalReasons(message)
-  }
-
-  // 500
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public internalServerError(data: any = undefined) {
-    throw new HttpStatusInternalServerError(data)
-  }
-
-  // 501
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public notImplemented(message: any = undefined) {
-    throw new HttpStatusNotImplemented(message)
-  }
-
-  // 502
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public badGateway(message: any = undefined) {
-    throw new HttpStatusBadGateway(message)
-  }
-
-  // 503
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public serviceUnavailable(message: any = undefined) {
-    throw new HttpStatusServiceUnavailable(message)
-  }
-
-  // 504
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public gatewayTimeout(message: any = undefined) {
-    throw new HttpStatusGatewayTimeout(message)
-  }
-
-  // 507
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public insufficientStorage(message: any = undefined) {
-    throw new HttpStatusInsufficientStorage(message)
-  }
-
-  // 510
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public notExtended(message: any = undefined) {
-    throw new HttpStatusNotExtended(message)
-  }
+  public notExtended(message?: any): never { throw new HttpStatusNotExtended(message) }
   // end: http status codes
 
   /**

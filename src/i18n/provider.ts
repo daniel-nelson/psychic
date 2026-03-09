@@ -76,42 +76,29 @@ function _i18n(i18nHash: GenericI18nObject, i18nPath: string[]): string {
   return _i18n(translation, i18nPath.slice(1))
 }
 
-export class I18nInterpolationReceivedUndefined extends Error {
-  private i18nPathString: string
-  private interpolationKey: string
-
-  constructor(i18nPathString: string, interpolationKey: string) {
+class I18nInterpolationError extends Error {
+  constructor(
+    private valueType: string,
+    private i18nPathString: string,
+    private interpolationKey: string,
+  ) {
     super()
-    Object.setPrototypeOf(this, I18nInterpolationReceivedUndefined.prototype)
-    this.i18nPathString = i18nPathString
-    this.interpolationKey = interpolationKey
+    Object.setPrototypeOf(this, new.target.prototype)
   }
 
   public override get message() {
-    return `
-undefined interpolation value received:
-i18n path string: ${this.i18nPathString}
-interpolationKey: ${this.interpolationKey}
-    `
+    return `\n${this.valueType} interpolation value received:\ni18n path string: ${this.i18nPathString}\ninterpolationKey: ${this.interpolationKey}\n    `
   }
 }
 
-export class I18nInterpolationReceivedNull extends Error {
-  private i18nPathString: string
-  private interpolationKey: string
-
+export class I18nInterpolationReceivedUndefined extends I18nInterpolationError {
   constructor(i18nPathString: string, interpolationKey: string) {
-    super()
-    Object.setPrototypeOf(this, I18nInterpolationReceivedNull.prototype)
-    this.i18nPathString = i18nPathString
-    this.interpolationKey = interpolationKey
+    super('undefined', i18nPathString, interpolationKey)
   }
+}
 
-  public override get message() {
-    return `
-null interpolation value received:
-i18n path string: ${this.i18nPathString}
-interpolationKey: ${this.interpolationKey}
-    `
+export class I18nInterpolationReceivedNull extends I18nInterpolationError {
+  constructor(i18nPathString: string, interpolationKey: string) {
+    super('null', i18nPathString, interpolationKey)
   }
 }

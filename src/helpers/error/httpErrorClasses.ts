@@ -1,33 +1,35 @@
-import HttpStatusBadGateway from '../../error/http/BadGateway.js'
-import HttpStatusBadRequest from '../../error/http/BadRequest.js'
-import HttpStatusConflict from '../../error/http/Conflict.js'
-import HttpStatusContentTooLarge from '../../error/http/ContentTooLarge.js'
-import HttpStatusExpectationFailed from '../../error/http/ExpectationFailed.js'
-import HttpStatusFailedDependency from '../../error/http/FailedDependency.js'
-import HttpStatusForbidden from '../../error/http/Forbidden.js'
-import HttpStatusGatewayTimeout from '../../error/http/GatewayTimeout.js'
-import HttpStatusGone from '../../error/http/Gone.js'
-import HttpStatusImATeapot from '../../error/http/ImATeapot.js'
-import HttpStatusInsufficientStorage from '../../error/http/InsufficientStorage.js'
-import HttpStatusInternalServerError from '../../error/http/InternalServerError.js'
-import HttpStatusLocked from '../../error/http/Locked.js'
-import HttpStatusMethodNotAllowed from '../../error/http/MethodNotAllowed.js'
-import HttpStatusMisdirectedRequest from '../../error/http/MisdirectedRequest.js'
-import HttpStatusNotAcceptable from '../../error/http/NotAcceptable.js'
-import HttpStatusNotExtended from '../../error/http/NotExtended.js'
-import HttpStatusNotFound from '../../error/http/NotFound.js'
-import HttpStatusNotImplemented from '../../error/http/NotImplemented.js'
-import HttpStatusPaymentRequired from '../../error/http/PaymentRequired.js'
-import HttpStatusPreconditionFailed from '../../error/http/PreconditionFailed.js'
-import HttpStatusPreconditionRequired from '../../error/http/PreconditionRequired.js'
-import HttpStatusProxyAuthenticationRequired from '../../error/http/ProxyAuthenticationRequired.js'
-import HttpStatusRequestHeaderFieldsTooLarge from '../../error/http/RequestHeaderFieldsTooLarge.js'
-import HttpStatusServiceUnavailable from '../../error/http/ServiceUnavailable.js'
-import HttpStatusTooManyRequests from '../../error/http/TooManyRequests.js'
-import HttpStatusUnauthorized from '../../error/http/Unauthorized.js'
-import HttpStatusUnavailableForLegalReasons from '../../error/http/UnavailableForLegalReasons.js'
-import HttpStatusUnprocessableContent from '../../error/http/UnprocessableContent.js'
-import HttpStatusUnsupportedMediaType from '../../error/http/UnsupportedMediaType.js'
+import {
+  HttpStatusBadGateway,
+  HttpStatusBadRequest,
+  HttpStatusConflict,
+  HttpStatusContentTooLarge,
+  HttpStatusExpectationFailed,
+  HttpStatusFailedDependency,
+  HttpStatusForbidden,
+  HttpStatusGatewayTimeout,
+  HttpStatusGone,
+  HttpStatusImATeapot,
+  HttpStatusInsufficientStorage,
+  HttpStatusInternalServerError,
+  HttpStatusLocked,
+  HttpStatusMethodNotAllowed,
+  HttpStatusMisdirectedRequest,
+  HttpStatusNotAcceptable,
+  HttpStatusNotExtended,
+  HttpStatusNotFound,
+  HttpStatusNotImplemented,
+  HttpStatusPaymentRequired,
+  HttpStatusPreconditionFailed,
+  HttpStatusPreconditionRequired,
+  HttpStatusProxyAuthenticationRequired,
+  HttpStatusRequestHeaderFieldsTooLarge,
+  HttpStatusServiceUnavailable,
+  HttpStatusTooManyRequests,
+  HttpStatusUnauthorized,
+  HttpStatusUnavailableForLegalReasons,
+  HttpStatusUnprocessableContent,
+  HttpStatusUnsupportedMediaType,
+} from '../../error/http/errors.js'
 
 export default function httpErrorClasses() {
   const clientErrorClasses = [
